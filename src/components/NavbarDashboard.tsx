@@ -1,8 +1,7 @@
 import { User } from "../utils/models/user";
-import { Box, Text, Image } from "@chakra-ui/react";
+import { Box, Text, Image, Link } from "@chakra-ui/react";
 
-const NavbarDashboard = ({authUser}: {authUser: User}) => {
-  
+const NavbarDashboard = ({authUser}: {authUser: User}) => {  
   return (
     <Box
         position="fixed"
@@ -18,9 +17,16 @@ const NavbarDashboard = ({authUser}: {authUser: User}) => {
         zIndex="1"
       >
         <Box>
-          <Text color="primary">
-            Hello World
-          </Text>
+          <Link 
+            href="/" 
+            color="primary.950" 
+            fontWeight="700" 
+            fontSize="20px" 
+            _hover={{ textDecoration: "none" }} 
+            _focus={{ outline: "none" }}
+          >
+            SoicaLens
+          </Link>
         </Box>
         <Box
           display="flex"

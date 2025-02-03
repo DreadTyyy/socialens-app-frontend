@@ -1,5 +1,4 @@
-import { Box, Flex, Button, Text } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
+import { Box, Flex, Button, Link } from "@chakra-ui/react";
 
 const NavbarGeneral = () => {
   return (
@@ -19,25 +18,47 @@ const NavbarGeneral = () => {
         <Flex
             gap="16px"
         >
-            <Text
-                _hover={{ 
-                    color: "primary.950",
-                 }}
+            <Link
+              href="/"
+              _hover={{ 
+                textDecoration: "none",
+                color: "primary.950",
+              }}
+              _focus={{ 
+                outline: "none"
+               }}
+               >
+              Beranda
+            </Link>
+            <Link
+              href="#coba"
+              _hover={{ 
+                textDecoration: "none",
+                color: "primary.950",
+                }}
+              _focus={{ 
+                outline: "none"
+              }}
             >
-                <Link to="/">Beranda</Link>
-            </Text>
-            <Text
-                _hover={{ 
-                    color: "primary.950",
-                 }}
-            >
-                <Link to="#coba">Coba Aplikasi</Link>
-            </Text>
+              Coba Aplikasi
+            </Link>
         </Flex>
         {/* ActionButton */}
         <Flex>
             <Button size="md" bgColor="primary.950" _hover={{ bgColor: "primary.500" }}>
-                <Link to="/login">Login</Link>
+              <Link
+                href="/login"
+                color="white"
+                _hover={{ 
+                    color: "none",
+                    textDecoration: "none",
+                    }}
+                _focus={{ 
+                    outline: "none"
+                }}
+              >
+                Login
+              </Link>
             </Button>
         </Flex>
     </Box>

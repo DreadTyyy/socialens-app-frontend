@@ -1,5 +1,6 @@
-import { Box, Flex, Text, Input, Link, Fieldset } from "@chakra-ui/react";
+import { Box, Flex, Text, Input, Fieldset, Spinner, Link as ChakraLink } from "@chakra-ui/react";
 import { Field } from "../components/ui/field";
+import { Link as RouterLink } from "react-router-dom";
 import { toaster, Toaster } from "../components/ui/toaster";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -15,6 +16,7 @@ const Login = ({
   const [password, handlePasswordChange] = useInput('');
   const [fieldError, setFieldError] = useState<boolean>(false);
   const [messageFieldError, setMessageFieldError] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
 
   const navigate = useNavigate()
 
@@ -22,6 +24,8 @@ const Login = ({
     if (authUser) {
         navigate('/dashboard');
     }
+    setFieldError(false);
+    
     // handle ketika user melakukan enter pada input login
     const handleKeyDown = (event: KeyboardEvent) => {
         if (event.key === 'Enter') {
@@ -39,23 +43,24 @@ const Login = ({
 
   const checkEmptyField = () => {
     if (username === "") {
-        setMessageFieldError("Username tidak boleh kosong")
+        setMessageFieldError("Username tidak boleh kosong");
         setFieldError(true);
-        return true
+        return true;
     }
     if (password === "") {
-        setMessageFieldError("Password tidak boleh kosong")
+        setMessageFieldError("Password tidak boleh kosong");
         setFieldError(true);
-        return true
+        return true;
     }
-    return false
+    return false;
   }
 
   const handleButtonLogin = async () => {
     if (checkEmptyField()) return;
 
+    setLoading(true);
     const { error, message, accessToken } = await login({username, password});
-    console.log("login cek");
+    setLoading(false);
     
     toaster.create({
         description: message,
@@ -95,18 +100,20 @@ const Login = ({
                     display="flex"
                     justifyContent="center"
                 >
-                    <Link
+                    <ChakraLink 
                         href="/"
                         color="primary.500"
                         fontWeight={700}
                         mb="32px"
-                        w="fit-content"
                         _hover={{ 
                             textDecoration: "none"
+                        }}
+                        _focus={{ 
+                            outline: "none"
                          }}
-                    >
+                     >
                         SociaLens
-                    </Link>
+                     </ChakraLink>
                 </Text>
                 <Text
                     fontSize={24}
@@ -164,18 +171,20 @@ const Login = ({
                         }}
                         onClick={handleButtonLogin}
                     >
-                        Login
+                        {loading ? <Spinner/> : <>Login</>}
                     </Text>
                     <Box mt={2} fontSize="14px">
                         <Text>Belum memiliki akun? 
                             {" "}
-                            <Link
-                                href="/register"
-                                color="primary.950"
-                                fontWeight="600"
-                            >
-                                Sign up
-                            </Link>
+                            <RouterLink to="/register">
+                                <Text
+                                    as="span"
+                                    color="primary.950"
+                                    fontWeight="600"
+                                >
+                                    Sign up
+                                </Text>
+                            </RouterLink>
                         </Text>
                     </Box>
                 </Fieldset.Content>

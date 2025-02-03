@@ -1,69 +1,21 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Box, Text, Flex, Image, Button } from "@chakra-ui/react";
+import { Box, Text, Flex, Image } from "@chakra-ui/react";
 import Copyright from '../components/Copyright';
 import LineChartDouble from "../components/LineChartDouble";
 import DetailDataReview from "../components/DetailDataReview";
 import UploadFileReview from "../components/UploadFileReview";
-import { DialogRoot, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogActionTrigger } from "../components/ui/dialog";
 
 import { LuFileUp } from "react-icons/lu";
-import { GrPowerReset } from "react-icons/gr";
 import { BiImport } from "react-icons/bi";
 import BarChart from "../components/BarChart";
 import { User } from "../utils/models/user";
-import { deleteRestaurant, getDetailRestaurantSentiment } from "../utils/api";
+import { getDetailRestaurantSentiment } from "../utils/api";
 import { RestaurantSentiment } from "../utils/models/restaurant";
 import { SentimentCount } from "../utils/models/sentiment";
 import InputRestaurantName from "../components/InputRestaurantName";
 import Calendar from "../components/Calendar";
-
-const ResetButton = ({userId}: {userId: number}) => {
-  const ref = useRef<HTMLInputElement>(null);
-                 
-  const handleDeleteRestaurant = async () => {
-    const {error, message} = await deleteRestaurant({userId});
-    if (error) {
-      alert(message);
-    }
-    alert(message);
-    window.location.href = '/dashboard';
-  }
-  return (
-    <DialogRoot initialFocusEl={() => ref.current} placement="center">
-      <DialogTrigger asChild>
-        <Flex 
-          alignItems="center" 
-          gap="8px" 
-          px="12px" 
-          py="8px" 
-          borderRadius="12px" 
-          bgColor="danger"
-          color="white"
-          cursor="pointer"
-          transition="all 0.2s ease-in"
-          _hover={{ 
-            bgColor: "red.700"
-          }}
-          >
-            <GrPowerReset size={18}/>
-            <Text>Reset</Text>
-          </Flex>
-      </DialogTrigger>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle> Apakah Anda yakin ingin menghapus data ini? Tindakan ini tidak dapat dibatalkan.</DialogTitle>
-        </DialogHeader>
-        <DialogFooter>
-            <DialogActionTrigger asChild>
-              <Button variant="outline" _hover={{ bgColor: "dark.100" }} size="sm">Batal</Button>
-            </DialogActionTrigger>
-            <Button bgColor="danger" _hover={{ bgColor: "red.700" }} size="sm" onClick={handleDeleteRestaurant}>Hapus</Button>
-        </DialogFooter>
-      </DialogContent>
-    </DialogRoot>
-  )
-}
+import ResetButton from "../components/ResetButton";
 
 const Analytics = ({authUser}: {authUser: User}) => {
   const [restaurant, setRestaurant] = useState<RestaurantSentiment | null>(null);

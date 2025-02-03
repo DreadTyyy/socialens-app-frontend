@@ -119,8 +119,7 @@ const Calendar = ({firstDate, lastDate, getData}:
         <DialogFooter>
           <Button variant="outline" size="sm" onClick={() => setOpen(false)}>Batal</Button>
           <Button bgColor="primary.950" size="sm" onClick={handleSubmit}>
-            {loading && <Spinner />}  
-            Simpan
+            {loading ? <Spinner /> : <>Simpan</>}  
           </Button>
         </DialogFooter>
       </DialogContent>

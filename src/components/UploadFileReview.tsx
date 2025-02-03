@@ -14,6 +14,7 @@ import { Field } from "./ui/field";
 import { HiUpload } from "react-icons/hi";
 import { createReview } from "../utils/api";
 import FormLabel from "./FormLabel";
+import { useNavigate } from "react-router-dom";
 
 const UploadFileReview = ({restaurant_id, children}: {
   restaurant_id: number;
@@ -25,6 +26,7 @@ const UploadFileReview = ({restaurant_id, children}: {
   const [loading, setLoading] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
   const ref = useRef<HTMLInputElement>(null);
+  const navigate = useNavigate();
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -60,7 +62,7 @@ const UploadFileReview = ({restaurant_id, children}: {
     }
     alert(message);
     setOpen(false);
-    window.location.href = "/dashboard/analytics";
+    navigate("/dashboard/analytics");
   }
 
   return (
@@ -89,9 +91,15 @@ const UploadFileReview = ({restaurant_id, children}: {
         </DialogBody>
         <DialogFooter>
             <Button variant="outline" size="sm" onClick={() => setOpen(false)}>Batal</Button>
-            <Button bgColor="primary.950" size="sm" onClick={handleSubmit}>
-              {loading && <Spinner />}
-              Simpan
+            <Button 
+              bgColor="primary.950" 
+              size="sm" 
+              onClick={!loading ? handleSubmit : undefined}
+              loading={loading}
+              spinner={<Spinner/>}
+              _loading={{ cursor: "not-allowed" }}
+            >
+              {loading ? <Spinner /> : <>Simpan</>}
             </Button>
         </DialogFooter>
       </DialogContent>

@@ -1,8 +1,8 @@
-import { Box, Flex, Text, Input, Link, Fieldset } from "@chakra-ui/react";
+import { Box, Flex, Text, Input, Spinner, Fieldset, Link as ChakraLink } from "@chakra-ui/react";
 import { Field } from "../components/ui/field";
 import { toaster, Toaster } from "../components/ui/toaster";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link as RouterLink } from "react-router-dom";
 import useInput from "../hooks/useInput";
 import { register } from "../utils/api";
 
@@ -16,6 +16,7 @@ const Register = ({
   const [confirmationPassword, handleConfirmationPasswordChange] = useInput('');
   const [fieldError, setFieldError] = useState<boolean>(false);
   const [messageFieldError, setMessageFieldError] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
 
   const navigate = useNavigate()
 
@@ -23,6 +24,7 @@ const Register = ({
     if (authUser) {
         navigate('/dashboard');
     }
+    setFieldError(false);
     // handle ketika user melakukan enter pada input register
     const handleKeyDown = (event: KeyboardEvent) => {
         if (event.key === 'Enter') {
@@ -40,32 +42,33 @@ const Register = ({
 
   const checkEmptyField = () => {
     if (username === "") {
-        setMessageFieldError("Username tidak boleh kosong")
+        setMessageFieldError("Username tidak boleh kosong");
         setFieldError(true);
-        return true
+        return true;
     }
     if (password === "") {
-        setMessageFieldError("Password tidak boleh kosong")
+        setMessageFieldError("Password tidak boleh kosong");
         setFieldError(true);
-        return true
+        return true;
     }
     if (confirmationPassword === "") {
-        setMessageFieldError("Konfirmasi password tidak boleh kosong")
+        setMessageFieldError("Konfirmasi password tidak boleh kosong");
         setFieldError(true);
-        return true
+        return true;
     }
     if (confirmationPassword !== password) {
-        setMessageFieldError("Password dan konfirmasi password tidak sama")
+        setMessageFieldError("Password dan konfirmasi password tidak sama");
         setFieldError(true);
-        return true
+        return true;
     }
-    return false
+    return false;
   }
 
   const handleButtonRegister = async () => {
     if (checkEmptyField()) return;
-
+    setLoading(true);
     const { error, message } = await register({username, password, confirmationPassword});
+    setLoading(false);
     toaster.create({
         description: message,
         type: error ? 'error' : 'success',
@@ -104,18 +107,20 @@ const Register = ({
                     display="flex"
                     justifyContent="center"
                 >
-                    <Link
+                    <ChakraLink 
                         href="/"
                         color="primary.500"
                         fontWeight={700}
                         mb="32px"
-                        w="fit-content"
                         _hover={{ 
                             textDecoration: "none"
+                        }}
+                        _focus={{ 
+                            outline: "none"
                          }}
-                    >
+                     >
                         SociaLens
-                    </Link>
+                     </ChakraLink>
                 </Text>
                 <Text
                     fontSize={24}
@@ -124,7 +129,7 @@ const Register = ({
                     w="300px"
                     textAlign="center"
                 >
-                    Hai! Selamat datang di SociaLens 👋
+                    Hai! Daftarkan akunmu di SociaLens 🚀
                 </Text>
             </Box>
             <Fieldset.Root mt={2} minW="320px" invalid={fieldError}>
@@ -185,18 +190,20 @@ const Register = ({
                         }}
                         onClick={handleButtonRegister}
                     >
-                        Sign up
+                        {loading ? <Spinner /> : <>Sign up</>}
                     </Text>
                     <Box mt={2} fontSize="14px">
                         <Text>Sudah memiliki akun? 
                             {" "}
-                            <Link
-                                href="/login"
-                                color="primary.950"
-                                fontWeight="600"
-                            >
-                                Sign in
-                            </Link>
+                            <RouterLink to="/login">
+                                <Text
+                                    as="span"
+                                    color="primary.950"
+                                    fontWeight="600"
+                                >
+                                    Sign in
+                                </Text>
+                            </RouterLink>
                         </Text>
                     </Box>
                 </Fieldset.Content>
