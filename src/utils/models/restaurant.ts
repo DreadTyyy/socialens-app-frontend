@@ -9,4 +9,5 @@ export type Restaurant = {
 export type RestaurantSentiment = Restaurant & {
   positive: number;
   negative: number;
+  initialDate: string;
 }
