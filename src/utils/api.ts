@@ -83,9 +83,13 @@ const getAuthUser = async () => {
     }
 }
 
-const getDetailRestaurantSentiment = async ({userId}: {userId: number}) => {
+const getDetailRestaurantSentiment = async ({userId, startDate, endDate}: {userId: number; startDate?: string; endDate?: string}) => {
     try {
-        const response = await fetch(`${BASE_URL}/api/restaurants/restaurant/${userId}/sentimen`);
+        const params = new URLSearchParams();
+        if (startDate) params.append("startDate", startDate);
+        if (endDate) params.append("endDate", endDate);
+        
+        const response = await fetch(`${BASE_URL}/api/restaurants/restaurant/${userId}/sentimen?${params.toString()}`);
         const responseJson = await response.json();
 
         if (response.status === 200) {

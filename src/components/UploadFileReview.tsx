@@ -8,12 +8,12 @@ import {
     DialogTrigger,
     DialogBody,
     DialogFooter,
-    DialogActionTrigger,
 } from "./ui/dialog";
 import { FileUploadRoot, FileUploadList, FileUploadTrigger } from "./ui/file-upload";
 import { Field } from "./ui/field";
 import { HiUpload } from "react-icons/hi";
 import { createReview } from "../utils/api";
+import FormLabel from "./FormLabel";
 
 const UploadFileReview = ({restaurant_id, children}: {
   restaurant_id: number;
@@ -23,6 +23,7 @@ const UploadFileReview = ({restaurant_id, children}: {
   const [errorSubmit, setErrorSubmit] = useState<boolean>(false);
   const [errorSubmitMessage, setErrorSubmitMessage] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
+  const [open, setOpen] = useState<boolean>(false);
   const ref = useRef<HTMLInputElement>(null);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -33,7 +34,7 @@ const UploadFileReview = ({restaurant_id, children}: {
 
   const handleSubmit = async(e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    setLoading(true);
+    setErrorSubmit(false);
     
     if (!restaurant_id) {
       setErrorSubmit(true);
@@ -45,10 +46,11 @@ const UploadFileReview = ({restaurant_id, children}: {
       setErrorSubmitMessage("File harus diunggah!");
       return;
     }
-
+    
     const formData = new FormData();
     formData.append('file', file);
-
+    
+    setLoading(true);
     const {error, message} = await createReview({restaurant_id, formData});
     setLoading(false);
     if (error) {
@@ -57,12 +59,13 @@ const UploadFileReview = ({restaurant_id, children}: {
       return;
     }
     alert(message);
-    window.location.href = '/dashboard/analytics';
+    setOpen(false);
+    window.location.href = "/dashboard/analytics";
   }
 
   return (
-    <DialogRoot initialFocusEl={() => ref.current} placement="center">
-      <DialogTrigger asChild>
+    <DialogRoot lazyMount open={open} initialFocusEl={() => ref.current} placement="center">
+      <DialogTrigger asChild onClick={() => setOpen(true)}>
         {children}
       </DialogTrigger>
       <DialogContent>
@@ -70,11 +73,8 @@ const UploadFileReview = ({restaurant_id, children}: {
           <DialogTitle>Import data review</DialogTitle>
         </DialogHeader>
         <DialogBody>
-          {errorSubmit &&
-            <Text bgColor="danger" color="white" w="100%" px={2} py={2} borderRadius="4px">
-              {errorSubmitMessage}
-            </Text>
-          }
+          {errorSubmit && <FormLabel variant="error">{errorSubmitMessage}</FormLabel>}
+          {loading && !errorSubmit && <FormLabel variant="normal">Sedang memproses data, ini mungkin memakan waktu lebih lama</FormLabel>}
           <Field my="16px" label="Data review" helperText="Pastikan tabel sesuai & format yang didukung: .xlsx, .csv" required>
             <FileUploadRoot accept={[".csv", ".xlsx"]} onChange={handleFileChange}>
               <FileUploadTrigger>
@@ -88,9 +88,7 @@ const UploadFileReview = ({restaurant_id, children}: {
           </Field>
         </DialogBody>
         <DialogFooter>
-            <DialogActionTrigger asChild>
-              <Button variant="outline" size="sm">Batal</Button>
-            </DialogActionTrigger>
+            <Button variant="outline" size="sm" onClick={() => setOpen(false)}>Batal</Button>
             <Button bgColor="primary.950" size="sm" onClick={handleSubmit}>
               {loading && <Spinner />}
               Simpan

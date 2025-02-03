@@ -16,6 +16,7 @@ import { deleteRestaurant, getDetailRestaurantSentiment } from "../utils/api";
 import { RestaurantSentiment } from "../utils/models/restaurant";
 import { SentimentCount } from "../utils/models/sentiment";
 import InputRestaurantName from "../components/InputRestaurantName";
+import Calendar from "../components/Calendar";
 
 const ResetButton = ({userId}: {userId: number}) => {
   const ref = useRef<HTMLInputElement>(null);
@@ -69,19 +70,20 @@ const Analytics = ({authUser}: {authUser: User}) => {
   const [sentiments, setSentiments] = useState<SentimentCount | null>(null);
   const [initialization, setInitialization] = useState<boolean>(true);
 
-  useEffect(() => {
-    async function getData() {
-      const {data} = await getDetailRestaurantSentiment({userId: authUser.id});
+  async function getData(startDate?: string, endDate?: string) {
+    const {data} = await getDetailRestaurantSentiment({userId: authUser.id, startDate, endDate});
 
-      if (data) {
-        setRestaurant(data.data);
-        setSentiments(data.sentimenCount);
-      }
-      setInitialization(false);
+    if (data) {
+      setRestaurant(data.data);
+      setSentiments(data.sentimenCount);
     }
-    
+    setInitialization(false);
+  }
+
+  useEffect(() => { 
     getData();
-  }, [authUser.id]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   if (initialization) {
     return null;
@@ -91,10 +93,15 @@ const Analytics = ({authUser}: {authUser: User}) => {
     <>
         <Box pt="70px" w="100%" bgColor="primary.100" minH="100vh">
           <Box pt="36px" pl="36px" pr="20px">
-            <Text fontWeight="medium" fontSize="24px" mb="24px">
-                Analisis Sentimen
-            </Text>
-            <Flex justifyContent="space-between" alignItems="center">
+            <Flex justifyContent="space-between" alignItems="center" gap="24px">
+              <Text fontWeight="medium" fontSize="24px" mb="24px">
+                  Analisis Sentimen
+              </Text>
+              {restaurant && sentiments &&
+                <Calendar getData={getData} firstDate={sentiments[0].date} lastDate={sentiments[sentiments.length - 1].date}/>
+              }
+            </Flex>
+            <Flex justifyContent="space-between" alignItems="center" gap="24px">
               <ResetButton userId={authUser.id} />
               <Flex gap="10px" flexDir={{ base: "column", lg: "row" }}>
                 <Flex 
@@ -211,7 +218,7 @@ const Analytics = ({authUser}: {authUser: User}) => {
                   borderColor="dark.200"
                   borderRadius="16px"
                 >
-                  <DetailDataReview initialDate={sentiments[0].date} restaurant={restaurant}/>
+                  <DetailDataReview initialDate={restaurant.initialDate} restaurant={restaurant}/>
                 </Box>
               </Flex>
               <Box mt="24px">

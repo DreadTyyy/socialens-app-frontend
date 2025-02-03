@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { Text, Button, Input } from "@chakra-ui/react";
+import { Button, Input } from "@chakra-ui/react";
 import { 
     DialogRoot, 
     DialogContent, 
@@ -12,6 +12,7 @@ import {
 } from "./ui/dialog";
 import { Field } from "./ui/field";
 import { createRestaurant } from "../utils/api";
+import FormLabel from "./FormLabel";
 
 const InputRestaurantName = ({userId, children}: {userId: number; children: React.ReactNode}) => {
     const [restaurantName, setRestaurantName] = useState<string>('');
@@ -50,11 +51,7 @@ const InputRestaurantName = ({userId, children}: {userId: number; children: Reac
             <DialogTitle>Buat restoran</DialogTitle>
           </DialogHeader>
           <DialogBody>
-            {errorSubmit &&
-              <Text bgColor="danger" color="white" w="100%" px={2} py={2} borderRadius="4px" mb="4px">
-                {errorSubmitMessage}
-              </Text>
-            }
+            {errorSubmit && <FormLabel variant="error">{errorSubmitMessage}</FormLabel>}
             <Field label="Nama restoran" required>
               <Input 
                 type="text" 
