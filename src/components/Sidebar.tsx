@@ -11,7 +11,7 @@ import { putAccessToken } from "../utils/api";
 
 const ButtonSide = (
     {Icon, title, status}
-    :{Icon: IconType; title: string; status: string;}) => {
+    :{Icon: IconType; title: string; status: "root" | "active";}) => {
     const variants = {
         root: {
             bgColor: "transparent",
