@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import { User } from '../utils/models/user';
 import { getDetailRestaurantSentiment } from '../utils/api';
 import { SentimentCount } from '../utils/models/sentiment';
-import { formattedShortDate } from '../utils/formattedDate';
+import { formattedShortDate, formattedShortFullDate } from '../utils/formattedDate';
 import { RestaurantSentiment } from '../utils/models/restaurant';
 import UploadFileReview from '../components/UploadFileReview';
 
@@ -35,7 +35,7 @@ const Dashboard = ({authUser}: {authUser: User}) => {
 
     const rangeDate = (sentiments: SentimentCount) => {
       const lenSentiments = sentiments.length;
-      return `${formattedShortDate(sentiments[0].date)} - ${formattedShortDate(sentiments[lenSentiments - 1].date)}`;
+      return `${formattedShortDate(sentiments[0].date)} - ${formattedShortFullDate(sentiments[lenSentiments - 1].date)}`;
     }
 
     const countData = (restaurant: RestaurantSentiment) =>{
