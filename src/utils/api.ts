@@ -1,5 +1,5 @@
-const BASE_URL = "http://localhost:3000";
-const MODEL_URL = "http://127.0.0.1:5000";
+const BASE_URL = import.meta.env.VITE_API_URL;
+const MODEL_URL = import.meta.env.VITE_MODEL_URL;
 
 const putAccessToken = (token: string) => {
     localStorage.setItem("accessToken", token);
