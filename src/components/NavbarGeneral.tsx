@@ -4,22 +4,34 @@ const NavbarGeneral = () => {
   return (
     <Box
         display="flex"
-        px="20px"
+        px={{ base: '5%', md: '80px' }}
         justifyContent="space-between"
         alignItems="center"
         w="100%"
-        position="relative"
-        h="70px"
+        position="absolute"
+        h="80px"
         zIndex={1}
     >
         {/* Logo */}
-        <Box></Box>
+        <Box>
+          <Link 
+            href="/" 
+            color="primary.950" 
+            fontWeight="700" 
+            fontSize="26px" 
+            _hover={{ textDecoration: "none" }} 
+            _focus={{ outline: "none" }}
+          >
+            SociaLens
+          </Link>
+        </Box>
         {/* List */}
         <Flex
-            gap="16px"
+            gap="24px"
         >
             <Link
-              href="/"
+              href="#"
+              fontWeight={500}
               _hover={{ 
                 textDecoration: "none",
                 color: "primary.950",
@@ -31,7 +43,8 @@ const NavbarGeneral = () => {
               Beranda
             </Link>
             <Link
-              href="#coba"
+              href="/login"
+              fontWeight={500}
               _hover={{ 
                 textDecoration: "none",
                 color: "primary.950",
@@ -44,10 +57,25 @@ const NavbarGeneral = () => {
             </Link>
         </Flex>
         {/* ActionButton */}
-        <Flex>
-            <Button size="md" bgColor="primary.950" _hover={{ bgColor: "primary.500" }}>
+        <Flex gap="16px">
+            <Button size="md" variant="ghost" borderRadius="12px" _hover={{ bgColor: "transparent" }}>
               <Link
                 href="/login"
+                color="dark.950"
+                _hover={{ 
+                    color: "dark.700",
+                    textDecoration: "none",
+                    }}
+                _focus={{ 
+                    outline: "none"
+                }}
+              >
+                Sign in
+              </Link>
+            </Button>
+            <Button size="md" bgColor="primary.950" borderRadius="12px" _hover={{ bgColor: "primary.500" }}>
+              <Link
+                href="/register"
                 color="white"
                 _hover={{ 
                     color: "none",
@@ -57,7 +85,7 @@ const NavbarGeneral = () => {
                     outline: "none"
                 }}
               >
-                Login
+                Sign up
               </Link>
             </Button>
         </Flex>
