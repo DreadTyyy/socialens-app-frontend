@@ -72,7 +72,7 @@ const Analytics = ({authUser}: {authUser: User}) => {
                         bgColor: "dark.100"
                     }}
                 >
-                    <Image src="/public/logos_google-maps.png" h="20px"/>
+                    <Image src="/logos_google-maps.png" h="20px" alt="Google Maps Logo"/>
                     <Text>Connect Google Maps</Text>
                 </Flex>
                 {authUser.restaurant_id ? 
@@ -222,7 +222,7 @@ const Analytics = ({authUser}: {authUser: User}) => {
               borderColor="dark.200"
               borderRadius="16px"
             >
-              <Image src={"/public/no_data.png"} w="360px"/>
+              <Image src={"/no_data.png"} w="360px" alt="No data found"/>
               <Text color="dark.950" opacity={0.8} fontSize="14px">
                 Tidak ada yang ditemukan. Coba masukkan data terlebih dahulu!
               </Text>
