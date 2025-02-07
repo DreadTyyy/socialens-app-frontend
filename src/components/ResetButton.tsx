@@ -19,6 +19,7 @@ const ResetButton = ({userId}: {userId: number}) => {
       setLoading(false);
       if (error) {
         setErrorField(message);
+        return;
       }
       navigate('/dashboard');
     }

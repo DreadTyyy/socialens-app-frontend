@@ -13,7 +13,7 @@ import {
 import { Field } from "./ui/field";
 import { createRestaurant } from "../utils/api";
 import FormLabel from "./FormLabel";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const InputRestaurantName = ({userId, children}: {userId: number; children: React.ReactNode}) => {
     const [restaurantName, setRestaurantName] = useState<string>('');
@@ -22,10 +22,12 @@ const InputRestaurantName = ({userId, children}: {userId: number; children: Reac
     const [loading, setLoading] = useState<boolean>(false);
     const ref = useRef<HTMLInputElement>(null);
     const navigate = useNavigate();
+    const location = useLocation();
   
     const handleRestaurantNameChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
       setRestaurantName(e.target.value);
     }
+    
     const handleSubmit = async() => {
       setErrorSubmit(false);
       if (!restaurantName) {
@@ -43,7 +45,11 @@ const InputRestaurantName = ({userId, children}: {userId: number; children: Reac
         setErrorSubmitMessage(message);
         return;
       }
-      navigate('/dashboard/analytics');
+      if (location.pathname.includes("analytics")) {
+        window.location.reload();
+      } else {
+        navigate('/dashboard/analytics');
+      }
     }
   
     return (

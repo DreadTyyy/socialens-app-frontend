@@ -14,7 +14,7 @@ import { Field } from "./ui/field";
 import { HiUpload } from "react-icons/hi";
 import { createReview } from "../utils/api";
 import FormLabel from "./FormLabel";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const UploadFileReview = ({restaurant_id, children}: {
   restaurant_id: number;
@@ -26,6 +26,7 @@ const UploadFileReview = ({restaurant_id, children}: {
   const [loading, setLoading] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
   const ref = useRef<HTMLInputElement>(null);
+  const location = useLocation();
   const navigate = useNavigate();
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -60,9 +61,12 @@ const UploadFileReview = ({restaurant_id, children}: {
       setErrorSubmitMessage(message);
       return;
     }
-    alert(message);
     setOpen(false);
-    navigate("/dashboard/analytics");
+    if (location.pathname.includes("analytics")) {
+      window.location.reload();
+    } else {
+      navigate("/dashboard/analytics");
+    }
   }
 
   return (
@@ -90,7 +94,18 @@ const UploadFileReview = ({restaurant_id, children}: {
           </Field>
         </DialogBody>
         <DialogFooter>
-            <Button variant="outline" size="sm" onClick={() => setOpen(false)}>Batal</Button>
+            <Button 
+              variant="outline" 
+              size="sm" 
+              onClick={() => setOpen(false)}
+              disabled={loading}
+              _disabled={{ 
+                cursor: "not-allowed",
+                opacity: 100
+               }}
+            >
+              Batal
+              </Button>
             <Button 
               bgColor="primary.950" 
               size="sm" 
