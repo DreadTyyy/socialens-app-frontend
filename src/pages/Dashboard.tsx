@@ -62,7 +62,7 @@ const Dashboard = ({authUser}: {authUser: User}) => {
                   flexDir={{ xl: "row", base: "column" }} 
                 >
                   <Flex gap="24px">
-                    <Image src="/public/logo_restaurant.png" w="64px" h="64px"/>
+                    <Image src="/logo_restaurant.png" w="64px" h="64px" alt="Logo Restaurant"/>
                     <Box>
                       <Text fontSize="32px" fontWeight="semibold" lineHeight="1.3">{restaurant.title}</Text>
                       <Text color="dark.950" fontSize="14px">{rangeDate(sentiments)}</Text>
