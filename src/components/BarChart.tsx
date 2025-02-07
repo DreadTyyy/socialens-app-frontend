@@ -82,7 +82,7 @@ const BarChart = ({value, sentiments}: {
 
   return (
     <Box maxW="100%" maxH="320px">
-        <Bar options={options} data={data}/>;
+        <Bar options={options} data={data}/>
       </Box>
   )
 }
