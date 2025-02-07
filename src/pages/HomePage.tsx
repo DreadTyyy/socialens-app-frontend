@@ -28,7 +28,7 @@ const HomePage = () => {
               href="/login" 
               gap="8px" 
               px="20px" 
-              py="16px" 
+              py="12px" 
               borderRadius="full" 
               bgColor="primary.950"
               color="white"
@@ -36,6 +36,7 @@ const HomePage = () => {
               fontSize="18px"
               transition="all 0.2s ease-in"
               w="fit-content"
+              h="fit-content"
               _hover={{ 
                 bgColor: "primary.700",
                 boxShadow: "1px 4px 16px 5px rgba(56, 134, 222, 0.3)",

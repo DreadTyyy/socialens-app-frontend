@@ -88,7 +88,7 @@ const Login = ({
             justifyContent="center"
             alignItems="center"
             gap="10px"
-            px="48px"
+            px={{ base: "16px", md: "48px" }}
             py="28px"
             bgColor="primary.100"
             boxShadow="2xl"
@@ -132,7 +132,7 @@ const Login = ({
                     </Text>
                 </Fieldset.ErrorText>
                 <Fieldset.Content>
-                    <Field mb={2}>
+                    <Field mb={{base: 1, md: 2}}>
                         <Input 
                             type="text" 
                             placeholder="Username" 
@@ -144,7 +144,7 @@ const Login = ({
                             value={username} 
                         />
                     </Field>
-                    <Field mb={2}>
+                    <Field mb={{base: 1, md: 2}}>
                         <Input 
                             type="password" 
                             placeholder="Password" 
