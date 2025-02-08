@@ -2,7 +2,7 @@ import { Box, Flex, Text, Link } from "@chakra-ui/react";
 import { FaCheck } from "react-icons/fa";
 import Copyright from "../components/Copyright";
 
-const features = ["Analisis sentimen akurat dan efisien", "Analisis sentimen real-time dengan hasil yang cepat", "Mendeteksi sentimen positif/negatif secara otomatis", "Didukung teknologi berbasis Artificial Intelligence", "Tampilan analisis sentimen yang informatif"];
+const features = ["Analisis sentimen akurat dan efisien", "Analisis sentimen real-time dengan hasil yang cepat", "Deteksi otomatis sentimen positif/negatif", "Didukung teknologi berbasis Artificial Intelligence", "Visualisasi data yang informatif dan mudah dipahami"];
 
 const HomePage = () => {
   return (
@@ -17,12 +17,12 @@ const HomePage = () => {
       bgColor="primary.200"
     >
       <Flex>
-        <Box w={{ base: "full", md: "50%" }}>
+        <Box w={{ base: "full", md: "70%" }}>
           <Text fontSize={{ base: "42px", md:"56px" }} fontWeight="600" color="dark.950" lineHeight={1.2} letterSpacing="-0.01em">
             SociaLens: Analisis Sentimen Review berbasis Artificial Intelligence
           </Text>
           <Text my="16px" fontSize="18px" color="dark.950" letterSpacing="-0.03em">
-            Kelola review dengan mudah menggunakan SociaLens! Manfaatkan fitur AI dalam membantu melakukan analisis sentimen review.
+            Kelola review dengan mudah menggunakan SociaLens! Gunakan teknologi AI untuk menganalisis sentimen review pelanggan secara real-time dan tingkatkan pengalaman pelanggan.
           </Text>
           <Link
               href="/login" 
@@ -56,7 +56,7 @@ const HomePage = () => {
             Dioptimalkan untuk analisis sentimen akurat dan pemrosesan data efisien
           </Text>
           <Text mt="16px" fontSize="18px" color="dark.950" letterSpacing="-0.03em">
-            SociaLens dibangun menggunakan teknologi yang mendukung tampilan analisis sentimen review negatif maupun positif dan menggunakan teknologi berbasis Artificial Intelligence untuk melakukan memprediksi sentimen review secara akurat.
+            SociaLens dirancang dengan teknologi AI untuk membantu UMKM memahami sentimen pelanggan secara akurat dan cepat. Dengan sistem analisis real-time, restoran dan bisnis dapat meningkatkan layanan berdasarkan review pelanggan.
           </Text>
         </Box>
         <Flex 
