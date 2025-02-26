@@ -53,7 +53,23 @@ const BarChart = ({value, sentiments}: {
   const positiveReviews: number[] = [];
   const negativeReviews: number[] = [];
 
-  sentiments.map(({date, positive, negative}) => {
+  // TODO: Mengurutkan tanggal minggu terakhir
+  const lastDate = new Date(sentiments[sentiments.length - 1].date);
+  const filledSentiments: SentimentCount = [];
+  for (let i = 6; i >= 0; i--) {
+    const date = new Date(lastDate);
+    date.setDate(lastDate.getDate() - i);
+
+    const formattedDate = date.toISOString().split("T")[0];
+    const found = sentiments.find(item => item.date === formattedDate); // YYYY-MM-DD
+    if (found) {
+      filledSentiments.push(found);
+    } else {
+      filledSentiments.push({date: formattedDate, positive: 0, negative: 0});
+    }
+  }
+
+  filledSentiments.map(({date, positive, negative}) => {
     labels.push(formattedShortDate(date));
     positiveReviews.push(positive);
     negativeReviews.push(negative);
