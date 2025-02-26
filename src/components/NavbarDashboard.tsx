@@ -1,5 +1,6 @@
 import { User } from "../utils/models/user";
 import { Box, Text, Image, Link } from "@chakra-ui/react";
+import { titleCase } from "../utils/titleCase";
 
 const NavbarDashboard = ({authUser}: {authUser: User}) => {  
   return (
@@ -36,7 +37,7 @@ const NavbarDashboard = ({authUser}: {authUser: User}) => {
         >
           <Image src={authUser.profile} width="42px" height="42px" bgColor="primary.950" borderRadius="10000px"/>
           <Text fontWeight='medium'>
-            {authUser.username}
+            {titleCase(authUser.username)}
           </Text>
         </Box>
       </Box>
