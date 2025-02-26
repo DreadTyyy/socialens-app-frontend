@@ -10,6 +10,8 @@ import { SentimentCount } from '../utils/models/sentiment';
 import { formattedShortDate, formattedShortFullDate } from '../utils/formattedDate';
 import { RestaurantSentiment } from '../utils/models/restaurant';
 import UploadFileReview from '../components/UploadFileReview';
+import { titleCase } from "../utils/titleCase";
+
 
 import { LuFileUp } from "react-icons/lu";
 import { BiImport } from "react-icons/bi";
@@ -64,7 +66,7 @@ const Dashboard = ({authUser}: {authUser: User}) => {
                   <Flex gap="24px">
                     <Image src="/logo_restaurant.png" w="64px" h="64px" alt="Logo Restaurant"/>
                     <Box>
-                      <Text fontSize="32px" fontWeight="semibold" lineHeight="1.3">{restaurant.title}</Text>
+                      <Text fontSize="32px" fontWeight="semibold" lineHeight="1.3">{titleCase(restaurant.title)}</Text>
                       <Text color="dark.950" fontSize="14px">{rangeDate(sentiments)}</Text>
                     </Box>
                   </Flex>
