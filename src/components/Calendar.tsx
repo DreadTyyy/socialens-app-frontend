@@ -65,13 +65,19 @@ const Calendar = ({firstDate, lastDate, getData}:
       setLoading(false);
       return;
     }
-    
-    // if (new Date(firstDate) > new Date(startDate)) setStartDate(firstDate);
-    // if (new Date(lastDate) < new Date(startDate)) setStartDate(lastDate);
 
     getData(startDate, endDate);
     setLoading(false);
     setOpen(false);
+  }
+
+  const printRangeDate = () => {
+    let initial = formattedShortDate(firstDate);
+    const ending = formattedShortFullDate(lastDate);
+    if (new Date(firstDate).getFullYear() < new Date(lastDate).getFullYear()) {
+      initial = formattedShortFullDate(firstDate);
+    }
+    return `${initial} - ${ending}`;
   }
 
   return (
@@ -89,7 +95,7 @@ const Calendar = ({firstDate, lastDate, getData}:
             bgColor: "dark.100"
           }}
         >
-          {formattedShortDate(firstDate)} - {formattedShortFullDate(lastDate)}
+          {printRangeDate()}
         </Text>
       </DialogTrigger>
       <DialogContent>
